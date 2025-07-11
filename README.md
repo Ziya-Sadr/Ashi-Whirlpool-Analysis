@@ -1,11 +1,93 @@
-Analysis of Ashigaru Whirlpool: Unspent Capacity & Anonymity Setsashidetector.py is a Python-based tool for tracing the lineage of Whirlpool CoinJoin transactions on the Bitcoin blockchain. It operates by starting from known "genesis" transactions for each Whirlpool pool and meticulously following their descendants. This allows for the mapping and analysis of Whirlpool's anonymity sets over time.The script connects to the public blockstream.info API to fetch blockchain data and uses a local SQLite database (whirlpool.db) to store its progress and the discovered transaction graph.FeaturesBlockchain Sync: Continuously syncs with the Bitcoin blockchain to trace transactions in real-time.Local Database: Stores all relevant transaction data and progress locally, allowing you to stop and resume the process without losing data.Whirlpool Detection: Specifically identifies valid 5-input, 5-output Whirlpool mix transactions.Anonymity Set Tracking: Tracks the unspent outputs (UTXOs) that currently make up the anonymity set for each pool.Reporting: Generates CSV reports suitable for time-series analysis and charting, showing the growth and changes in the anonymity sets.RequirementsPython 3.xrequests librarypython-bitcoinlib libraryInstallationClone the repository:git clone <your-repository-url>
+# Analysis of Ashigaru Whirlpool: Unspent Capacity & Anonymity Sets
+
+**`ashidetector.py`** is a Python-based tool for tracing the lineage of Whirlpool CoinJoin transactions on the Bitcoin blockchain.
+
+It starts from the first Whirlpool transactions for pool and follows on for analysis of anonymity sets over time.
+
+---
+
+## 🔧 How It Works
+
+* **Blockchain Sync:** Syncs with the Bitcoin blockchain via [blockstream.info](https://blockstream.info) to find the transactions.
+* **Local Database:** Uses a local SQLite database (`whirlpool.db`) to store data and progress. You can pause/resume without losing data.
+* **Whirlpool Detection:** Identifies valid Whirlpool CoinJoins (5-input, 5-output).
+* **Anonymity Set Tracking:** Tracks unspent outputs (UTXOs) currently in anonymity sets.
+* **Reporting:** Generates CSV reports for time-series analysis and trend visualization.
+
+---
+
+## 🛠️ Installation
+
+```bash
+git clone <[your-repository-url](https://github.com/Ziya-Sadr/Ashi-Whirlpool-Analysis/edit/main/README.md)>
 cd <your-repository-directory>
-Install the required Python libraries:pip install requests python-bitcoinlib
-UsageThe tool is operated via the command line and has several modes.Start the TracerTo begin syncing with the blockchain and building the transaction database:python ashidetector.py run
-On the first run, the script will fetch the genesis transactions and start scanning from the earliest relevant block.The process can be stopped at any time (Ctrl+C) and will resume from the last processed block on the next run.To start over with a clean database, use the --fresh flag:python ashidetector.py run --fresh
-Display StatsTo see a summary of the current state of the anonymity sets (based on the data synced so far):python ashidetector.py stats
-Generate ReportsThe tool can generate two types of CSV reports, which are saved with a timestamp in the filename (e.g., whirlpool_report_20231027_103000.csv).Simple Report: A simplified report ideal for charting overall trends.python ashidetector.py simplereport
-You can specify the block interval for data aggregation (default is 10):python ashidetector.py simplereport --interval 100
-Detailed Report: A more detailed report that breaks down changes by pool.python ashidetector.py report
-You can specify the block interval (default is 1000):python ashidetector.py report --interval 500
-How It WorksSeeding: The tracer is hardcoded with the transaction IDs of the "genesis" transactions that created the first UTXOs for each Whirlpool denomination pool.Scanning: It iterates through every block on the Bitcoin blockchain, starting from the block containing the earliest genesis transaction.Lineage Tracing: For each transaction in a block, it checks if any of its inputs correspond to an unspent output from a previously identified Whirlpool transaction.Validation: If a transaction spends UTXOs from the anonymity set, the script checks if it meets the criteria of a valid Whirlpool mix:It must only spend inputs from a single Whirlpool pool (no cross-pool mixing).It must have exactly 5 inputs and 5 outputs.Updating the Set: If a transaction is validated as a Whirlpool mix, its outputs are added to the anonymity set in the database, and the inputs it spent are marked as spent. Transactions that spend from the set but do not conform to the rules are considered "end-of-lineage," and their outputs are not tracked further.LicenseThis project is licensed under the MIT License. See the LICENSE file for details.
+pip install requests python-bitcoinlib
+```
+
+---
+
+## Usage
+
+The tool is CLI-based and supports multiple modes.
+
+### RUN
+
+```bash
+python ashidetector.py run
+```
+
+* On the first run, it fetches the first transactions and scans from the earliest block.
+* You can stop (Ctrl+C) and resume anytime.
+
+To start fresh:
+
+```bash
+python ashidetector.py run --fresh
+```
+
+---
+
+### View Stats
+
+```bash
+python ashidetector.py stats
+```
+
+Displays the current anonymity set state based on synced data.
+
+---
+
+### Generate Reports
+
+#### Simple Report
+
+```bash
+python ashidetector.py simplereport
+```
+
+With a custom block interval:
+
+```bash
+python ashidetector.py simplereport --interval 100
+```
+
+#### Detailed Report
+
+```bash
+python ashidetector.py report
+```
+
+With a custom block interval:
+
+```bash
+python ashidetector.py report --interval 500
+```
+
+---
+
+## License
+
+This project is licensed under the **MIT License**.
+See the `LICENSE` file for more details.
+
+---
