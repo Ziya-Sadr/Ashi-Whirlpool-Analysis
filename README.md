@@ -19,9 +19,12 @@ It starts from the first Whirlpool transactions for pool and follows on for anal
 ## Installation
 
 ```bash
-git clone <https://github.com/Ziya-Sadr/Ashi-Whirlpool-Analysis.git>
-cd <cd Ashi-Whirlpool-Analysis>
+git clone https://github.com/Ziya-Sadr/Ashi-Whirlpool-Analysis.git
+
+cd Ashi-Whirlpool-Analysis
+
 pip install requests python-bitcoinlib
+
 ```
 
 ---
