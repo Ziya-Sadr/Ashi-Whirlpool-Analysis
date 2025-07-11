@@ -6,7 +6,7 @@ It starts from the first Whirlpool transactions for pool and follows on for anal
 
 ---
 
-## 🔧 How It Works
+## How It Works
 
 * **Blockchain Sync:** Syncs with the Bitcoin blockchain via [blockstream.info](https://blockstream.info) to find the transactions.
 * **Local Database:** Uses a local SQLite database (`whirlpool.db`) to store data and progress. You can pause/resume without losing data.
@@ -16,11 +16,11 @@ It starts from the first Whirlpool transactions for pool and follows on for anal
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ```bash
-git clone <[your-repository-url](https://github.com/Ziya-Sadr/Ashi-Whirlpool-Analysis/edit/main/README.md)>
-cd <your-repository-directory>
+git clone <https://github.com/Ziya-Sadr/Ashi-Whirlpool-Analysis.git>
+cd <cd Ashi-Whirlpool-Analysis>
 pip install requests python-bitcoinlib
 ```
 
