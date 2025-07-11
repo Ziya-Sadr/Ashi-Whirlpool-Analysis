@@ -23,6 +23,9 @@ git clone https://github.com/Ziya-Sadr/Ashi-Whirlpool-Analysis.git
 
 cd Ashi-Whirlpool-Analysis
 
+python3 -m venv venv
+source venv/bin/activate
+
 pip install requests python-bitcoinlib
 
 ```
